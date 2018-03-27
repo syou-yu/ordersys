@@ -4,15 +4,16 @@
   <router-view></router-view>
 
   <mt-tabbar v-model="selected" fixed>
-    <mt-tab-item id="tab1">
+    <mt-tab-item id="order" @click.native="goTo()">
       <i slot="icon" class="iconfont icon-diancan"></i>
       点餐
     </mt-tab-item>
-    <mt-tab-item id="tab2">
+
+    <mt-tab-item id="history" @click.native="goTo()">
       <i slot="icon" class="iconfont icon-3lishi"></i>
       历史
     </mt-tab-item>
-    <mt-tab-item id="tab3">
+    <mt-tab-item id="user" @click.native="goTo()">
       <i slot="icon" class="iconfont icon-iconfuzhi"></i>
       我的
     </mt-tab-item>
@@ -26,9 +27,17 @@
 export default {
   data() {
     return {
-      selected: 'tab1',
+      selected: 'order',
     }
-  }
+  },
+  mounted() {
+    this.selected = this.$route.name;
+  },
+  methods: {
+    goTo() {
+      this.$router.push(`./${this.selected}`);
+    }
+  },
 }
 </script>
 

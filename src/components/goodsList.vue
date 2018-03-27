@@ -1,6 +1,5 @@
 <template>
 <div style="margin-bottom: 100px;">
-  {{clearInfo}}
   <div class="itemGroup" v-for="(item,index) in goodsInfo" :key="index">
     <div class="item">
       <div class="img"></div>
@@ -24,34 +23,11 @@
 
 <script>
 export default {
-  props: ["goodsInfo", "clearInfo"],
-  data() {
-    return {
-      cartList: [],
-    };
-  },
+  props: ["goodsInfo"],
   methods: {
     addToCart(item) {
-      // 查找餐篮中是否已存在商品
-      let hasGoods = this.cartList.some((goods)=>{
-        return( goods.goodsName === item.name)
-      })
-      // 判断新增或数量加一
-      if(hasGoods){
-        let theGoods = this.cartList.filter((goods)=>{
-          return (goods.goodsName === item.name)
-        })
-        theGoods[0].quantity++
-      } else {
-        let cartItem = {
-          'goodsName': item.name,
-          'goodsPrice': item.price,
-          'quantity': 1
-        };
-        this.cartList.push(cartItem);
-      };
-      this.$emit('cartList', this.cartList)
-      console.log(this.cartList);
+      this.$emit('goodsItem', item);
+
     }
   },
 };

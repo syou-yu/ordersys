@@ -22,16 +22,28 @@
   <transition name="fade">
   <mt-tab-container v-model="selected">
     <mt-tab-container-item id="1">
-      <goods-list :goodsInfo="goodsList1" :clearInfo="clearCartList" @cartList="getcartList"></goods-list>
+      <goods-list
+        :goodsInfo="goodsList1"
+        @goodsItem="getcartList">
+      </goods-list>
     </mt-tab-container-item>
     <mt-tab-container-item id="2">
-      <goods-list :goodsInfo="goodsList2" :clearInfo="clearCartList" @cartList="getcartList"></goods-list>
+      <goods-list
+        :goodsInfo="goodsList2"
+        @goodsItem="getcartList">
+     </goods-list>
     </mt-tab-container-item>
     <mt-tab-container-item id="3">
-      <goods-list :goodsInfo="goodsList3" :clearInfo="clearCartList" @cartList="getcartList"></goods-list>
+      <goods-list
+        :goodsInfo="goodsList3"
+        @goodsItem="getcartList">
+      </goods-list>
     </mt-tab-container-item>
     <mt-tab-container-item id="4">
-      <goods-list :goodsInfo="goodsList4" :clearInfo="clearCartList" @cartList="getcartList"></goods-list>
+      <goods-list
+        :goodsInfo="goodsList4"
+        @goodsItem="getcartList">
+      </goods-list>
     </mt-tab-container-item>
   </mt-tab-container>
   </transition>
@@ -42,7 +54,7 @@
     class="cartBtn" 
     @click="toggleCart"
     :disabled="cartBtnDisabled">
-    primary
+    <mt-badge size="small" v-if="cartList.length !== 0">{{cartList.length}}</mt-badge>
   </mt-button>
   <mt-popup
     v-model="popupVisible"
@@ -107,11 +119,32 @@ export default {
     this.goodsList = localData.postData;
   },
   methods: {
-    // 获取cart内容
+    // 控制cartList
     getcartList(value) {
-      this.cartList = value;
-      this.cartBtnDisabled = false;
-      // console.log(this.cartList);
+      // 查找餐篮中是否已存在商品
+      let hasGoods = this.cartList.some((goods) => {
+        return( goods.goodsName === value.name)
+      });
+      // 判断新增或数量加一
+      if (hasGoods) {
+        let theGoods = this.cartList.filter((goods) => {
+          return (goods.goodsName === value.name)
+        })
+        theGoods[0].quantity++
+      } else {
+        let cartItem = {
+          'goodsName': value.name,
+          'goodsPrice': value.price,
+          'quantity': 1,
+        };
+        this.cartList.push(cartItem);
+      }
+
+      if (this.cartList.length === 0) {
+        this.controlBtn();
+      } else {
+        this.cartBtnDisabled = false;
+      }
     },
     // 弹出popup页内容
     toggleCart() {
@@ -123,7 +156,7 @@ export default {
       this.cartBtnDisabled = true;
     },
     clearList() {
-      this.clearCartList = true;
+      this.cartList = [];
       this.controlBtn();
     }
 

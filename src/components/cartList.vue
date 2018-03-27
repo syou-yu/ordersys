@@ -62,7 +62,6 @@ export default {
       if (item.quantity === 0) {
         that.cartInfo.splice(index,1);
       };
-
       if ( that.cartInfo.length === 0){
         that.$emit('banBtn');
       }
@@ -94,7 +93,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.cartInfo)
+    // console.log(this.cartInfo)
   }
 
 }
@@ -153,9 +152,5 @@ export default {
   color: #333333;
   line-height: 1rem;
   border-top: 1px #efefef solid;
-
-  span {
-    
-  }
 }
 </style>

@@ -9,6 +9,9 @@ import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css';
 Vue.use(Mint);
 
+import Vuex from 'vuex'
+Vue.use(Vuex)
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
