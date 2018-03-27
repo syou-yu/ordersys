@@ -1,5 +1,6 @@
 <template>
 <div style="margin-bottom: 100px;">
+  {{clearInfo}}
   <div class="itemGroup" v-for="(item,index) in goodsInfo" :key="index">
     <div class="item">
       <div class="img"></div>
@@ -23,7 +24,7 @@
 
 <script>
 export default {
-  props: ["goodsInfo"],
+  props: ["goodsInfo", "clearInfo"],
   data() {
     return {
       cartList: [],
@@ -50,8 +51,9 @@ export default {
         this.cartList.push(cartItem);
       };
       this.$emit('cartList', this.cartList)
+      console.log(this.cartList);
     }
-  }
+  },
 };
 </script>
 

@@ -35,6 +35,10 @@
         </span>
       </div>
 
+      <div class="submitBtn">
+        <mt-button style="width: 100%;" @click="addToHistoryOrder">submit</mt-button>
+      </div>
+
     </div>
   </div>
 </template>
@@ -42,6 +46,11 @@
 <script>
 export default {
   props:['cartInfo'],
+  data() {
+    return {
+      localStorageArray: []
+    }
+  },
   methods: {
     add(item) {
       item.quantity++;
@@ -71,13 +80,21 @@ export default {
 
       return sumPrice
       }
-
-    return
-
+    },
+    addToHistoryOrder() {
+      let localStorageObject = {
+        orderList: this.cartInfo,
+        totalPrice: this.sum(),
+        orderDate: new Date(),
+      };
+      this.localStorageArray.push(localStorageObject);
+      localStorage.setItem('historyOrder', JSON.stringify(this.localStorageArray));
+      // let aa = localStorage.getItem('historyOrder');
+      this.$emit('hadSubmit');
     }
   },
   mounted() {
-
+    console.log(this.cartInfo)
   }
 
 }

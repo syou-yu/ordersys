@@ -22,16 +22,16 @@
   <transition name="fade">
   <mt-tab-container v-model="selected">
     <mt-tab-container-item id="1">
-      <goods-list :goodsInfo="goodsList1" @cartList="getcartList"></goods-list>
+      <goods-list :goodsInfo="goodsList1" :clearInfo="clearCartList" @cartList="getcartList"></goods-list>
     </mt-tab-container-item>
     <mt-tab-container-item id="2">
-      <goods-list :goodsInfo="goodsList2" @cartList="getcartList"></goods-list>
+      <goods-list :goodsInfo="goodsList2" :clearInfo="clearCartList" @cartList="getcartList"></goods-list>
     </mt-tab-container-item>
     <mt-tab-container-item id="3">
-      <goods-list :goodsInfo="goodsList3" @cartList="getcartList"></goods-list>
+      <goods-list :goodsInfo="goodsList3" :clearInfo="clearCartList" @cartList="getcartList"></goods-list>
     </mt-tab-container-item>
     <mt-tab-container-item id="4">
-      <goods-list :goodsInfo="goodsList4" @cartList="getcartList"></goods-list>
+      <goods-list :goodsInfo="goodsList4" :clearInfo="clearCartList" @cartList="getcartList"></goods-list>
     </mt-tab-container-item>
   </mt-tab-container>
   </transition>
@@ -48,7 +48,11 @@
     v-model="popupVisible"
     position="bottom"
     style="width: 100%;">
-    <cart-list :cartInfo="cartList" @banBtn="controlBtn"></cart-list>
+    <cart-list
+      :cartInfo="cartList"
+      @banBtn="controlBtn"
+      @hadSubmit="clearList">
+    </cart-list>
   </mt-popup>
 
 </div>
@@ -73,6 +77,7 @@ export default {
       cartList: [],
       cartBtnDisabled: true,
       popupVisible: false,
+      clearCartList: false,
     }
   },
   computed: {
@@ -102,18 +107,26 @@ export default {
     this.goodsList = localData.postData;
   },
   methods: {
+    // 获取cart内容
     getcartList(value) {
       this.cartList = value;
       this.cartBtnDisabled = false;
-      console.log(this.cartList);
+      // console.log(this.cartList);
     },
+    // 弹出popup页内容
     toggleCart() {
       this.popupVisible = !this.popupVisible;
     },
+    // 禁用餐篮按钮
     controlBtn() {
       this.toggleCart();
       this.cartBtnDisabled = true;
+    },
+    clearList() {
+      this.clearCartList = true;
+      this.controlBtn();
     }
+
   }
 }
 </script>
