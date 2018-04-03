@@ -1,19 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import tablePage from '@/pages/tablePage'
-import indexPage from '@/pages/indexPage'
-import orderPage from '@/pages/orderPage'
-import historyPage from '@/pages/historyPage'
-import userPage from '@/pages/userPage'
+import tablePage from '@/pages/custom/tablePage'
+import indexPage from '@/pages/custom/indexPage'
+import orderPage from '@/pages/custom/orderPage'
+import historyPage from '@/pages/custom/historyPage'
+import userPage from '@/pages/custom/userPage'
+import kitchenPage from '@/pages/kitchen/indexPage'
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [{
+  routes: [
+    {
       path: '/',
       name: 'HelloWorld',
-      component: orderPage,
+      component: kitchenPage,
     },
+    // 用户端
     {
       path: '/table:id',
       name: 'tablePage',
@@ -41,6 +44,12 @@ export default new Router({
           component: userPage,
         },
       ]
-    }
+    },
+    // 厨房端
+    {
+      path: '/kitchen',
+      name: 'kitchenPage',
+      component: kitchenPage,
+    },
   ]
 })

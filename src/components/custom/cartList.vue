@@ -11,11 +11,14 @@
       <div class="cartItem"
         v-for="(item,index) in cartInfo"
         :key="index">
+
         <p class="goodsName">{{item.goodsName}}</p>
+
         <p class="goodsPrice">
           <i class="iconfont icon-renminbi"></i>
           {{item.goodsPrice}}
         </p>
+
         <div class="goodsQuantity">
           <mt-button size="small" class="numBtn" @click="minus(item,index)">
             <i slot="icon" class="iconfont icon-minus"></i>
@@ -25,6 +28,7 @@
             <i slot="icon" class="iconfont icon-add"></i>
           </mt-button>
         </div>
+
       </div>
 
       <div class="sum">
@@ -85,10 +89,22 @@ export default {
         orderList: this.cartInfo,
         totalPrice: this.sum(),
         orderDate: new Date(),
+        orderStatus: '进行中',
+        tableNumber: this.$route.params.id,
       };
-      this.localStorageArray.push(localStorageObject);
-      localStorage.setItem('historyOrder', JSON.stringify(this.localStorageArray));
-      // let aa = localStorage.getItem('historyOrder');
+      let oldLocalStorageArray = JSON.parse(localStorage.getItem('historyOrder'));
+      // 如果本地储存已存在
+        if (oldLocalStorageArray && oldLocalStorageArray.length > 0) {
+          this.localStorageArray = oldLocalStorageArray;
+          this.localStorageArray.push(localStorageObject);
+          localStorage.setItem('historyOrder', JSON.stringify(this.localStorageArray));
+          console.log('had localStorage')
+        } else {
+          console.log('empty localStorage')
+          this.localStorageArray.push(localStorageObject);
+          localStorage.setItem('historyOrder', JSON.stringify(this.localStorageArray));
+        }
+
       this.$emit('hadSubmit');
     }
   },

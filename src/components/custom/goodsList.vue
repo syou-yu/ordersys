@@ -1,6 +1,7 @@
 <template>
 <div style="margin-bottom: 100px;">
   <div class="itemGroup" v-for="(item,index) in goodsInfo" :key="index">
+
     <div class="item">
       <div class="img"></div>
       <div class="detail">
@@ -16,7 +17,8 @@
           </mt-button>
         </div>
       </div>
-  </div>
+    </div>
+
   </div>
 </div>
 </template>

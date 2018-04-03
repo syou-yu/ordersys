@@ -1,3 +1,24 @@
+<template>
+<div>
+  <div class="list">
+    <div class="list__item" v-for="(item,index) in listInfo" :key="index">
+      <div class="list__item--goodsName">{{item.goodsName}}</div>
+      <div class="list__item--goodsPrice">
+        <i class="iconfont icon-renminbi"></i>
+        {{item.goodsPrice}}
+      </div>
+      <div class="list__item--goodsQuantity">{{item.quantity}}</div>
+    </div>
+  </div>
+</div>
+</template>
+
+<script>
+export default {
+  props:["listInfo"],
+}
+</script>
+
 <style lang="scss" scoped>
 .list {
   display: flex;
@@ -20,7 +41,6 @@
     &--goodsPrice {
       width: 30%;
       text-align: center;
-      color: #F56C6C;
       font-size: 0.4rem;
     }
 
@@ -31,26 +51,4 @@
   }
 }
 </style>
-
-<template>
-<div>
-  <div class="list">
-    <div class="list__item" v-for="(item,index) in listInfo" :key="index">
-      <div class="list__item--goodsName">{{item.goodsName}}</div>
-      <div class="list__item--goodsPrice">
-        <i class="iconfont icon-renminbi"></i>
-        {{item.goodsPrice}}
-      </div>
-      <div class="list__item--goodsQuantity">{{item.quantity}}</div>
-    </div>
-  </div>
-</div>
-</template>
-
-<script>
-export default {
-  props:["listInfo"],
-}
-</script>
-
 

@@ -9,6 +9,12 @@ import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css';
 Vue.use(Mint);
 
+const MsgBox = Mint.MessageBox
+Vue.prototype.$msgbox = MsgBox
+Vue.prototype.$alert = MsgBox.alert
+Vue.prototype.$confirm = MsgBox.confirm
+Vue.prototype.$prompt = MsgBox.prompt
+
 import Vuex from 'vuex'
 Vue.use(Vuex)
 

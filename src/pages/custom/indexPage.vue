@@ -2,7 +2,7 @@
 <div class="container">
 
   <router-view></router-view>
-
+  
   <mt-tabbar v-model="selected" fixed>
     <mt-tab-item id="order" @click.native="goTo()">
       <i slot="icon" class="iconfont icon-diancan"></i>
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
