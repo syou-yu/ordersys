@@ -6,6 +6,7 @@ import orderPage from '@/pages/custom/orderPage'
 import historyPage from '@/pages/custom/historyPage'
 import userPage from '@/pages/custom/userPage'
 import kitchenPage from '@/pages/kitchen/indexPage'
+import adminPage from '@/pages/admin/indexPage'
 
 Vue.use(Router)
 
@@ -50,6 +51,12 @@ export default new Router({
       path: '/kitchen',
       name: 'kitchenPage',
       component: kitchenPage,
+    },
+    // 管理端
+    {
+      path: '/admin',
+      name: 'adminPage',
+      component: adminPage,
     },
   ]
 })
