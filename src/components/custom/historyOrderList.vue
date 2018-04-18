@@ -8,7 +8,7 @@
       <!-- header -->
       <div class="item__header">
         <div class="item__header-top">
-          日期：{{ item.orderDate }}
+          日期：{{ FormatDate(item.orderDate) }}
         </div>
         <div class="item__header-bottom">
           状态：{{ item.orderStatus }}
@@ -39,6 +39,18 @@ export default {
   components: {
     List,
   },
+  methods: {
+    FormatDate (strTime) {
+      let date = new Date(strTime);
+      let Year = date.getFullYear();
+      let Month = date.getMonth()+1 > 10 ? date.getMonth()+1 : '0'+(date.getMonth()+1);
+      let Day = date.getDate() > 10 ? date.getDate() : ('0'+date.getDate());
+      let Hour = date.getHours() > 10 ? date.getHours() : '0'+date.getHours();
+      let Minute = date.getMinutes() > 10 ? date.getMinutes() : '0'+date.getMinutes();
+      let Second = date.getSeconds() > 10 ? date.getSeconds() : '0'+date.getSeconds();
+      return `${Year}/${Month}/${Day} ${Hour}:${Minute}:${Second}`;
+    }
+  }
 }
 </script>
 
