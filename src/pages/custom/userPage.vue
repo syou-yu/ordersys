@@ -1,6 +1,6 @@
 <template>
 <div>
-  this is userPage.
+  <h1>  用户页建设中...</h1>
 </div>
 </template>
 
