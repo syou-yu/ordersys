@@ -86,6 +86,7 @@
 </template>
 
 <script>
+const localData = require('../../data/localData');
 import model from '../../components/base/BaseModal';
 import { Toast } from 'mint-ui';
 
@@ -103,7 +104,13 @@ export default {
     }
   },
   mounted() {
-    this.goods = JSON.parse(localStorage.getItem('goodsList'));
+    // 是否有本地储存？获取本地储存赋值商品列表：商品数据设置本地储存
+    let localStorageGoods = JSON.parse(localStorage.getItem('goodsList'));
+    if (localStorageGoods && localStorageGoods.length > 0) {
+      this.goods = localStorageGoods;
+    } else {
+      this.goods = localData.postData;
+    }
     // 设置categoryPicker的值
     let category  = this.goods.map((item) => {
       return item.category
