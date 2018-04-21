@@ -16,7 +16,6 @@
   </mt-navbar>
 
   <!-- tab-container -->
-  <keep-alive>
   <mt-tab-container v-model="selected">
 
     <mt-tab-container-item id="1">
@@ -52,7 +51,6 @@
     </mt-tab-container-item>
     
   </mt-tab-container>
-  </keep-alive>
 
   <!-- cart -->
   <mt-button 
@@ -137,6 +135,9 @@ export default {
       this.goodsList = localData.postData;
     }
 
+  },
+  beforeDestroy() {
+    this.goodsList = [];
   },
   methods: {
     // 控制cartList

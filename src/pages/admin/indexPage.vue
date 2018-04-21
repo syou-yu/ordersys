@@ -52,6 +52,7 @@
           label="菜品分类" 
           placeholder="请选择菜品分类"
           v-model="activeGoods.category"
+          :readonly="true"
         >
         </mt-field>
       </div>
@@ -130,9 +131,20 @@ export default {
         let toastMessage = `${this.activeGoods.name} 修改成功`
         Toast(toastMessage);
       } else {
-        this.goods.push(this.activeGoods);
+        let { name, price, category, hotsale } = this.activeGoods
+        let newGoods = {
+          name,
+          price,
+          category,
+          hotsale
+        };
+        console.log(newGoods);
+        this.goods.push(newGoods);
+
         // 修改本地储存
-        this.changeLocalStorage();
+        localStorage.setItem('goodsList', JSON.stringify(this.goods));
+
+        console.log(JSON.parse(localStorage.getItem('goodsList')));
         // 提示
         let toastMessage = `${this.activeGoods.name} 添加成功`
         Toast(toastMessage);
