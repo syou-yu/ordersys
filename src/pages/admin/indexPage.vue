@@ -32,41 +32,52 @@
     maskPaddingLr="10"
   >
     <div class="editor" slot="content">
-      <mt-field
-        label="菜品名" 
-        placeholder="请输入菜品名"
-        v-model="activeGoods.name"
+      <mt-button 
+        type="danger" 
+        style="width: 100%;"
+        @click="delGoods"
+        v-show="activeGoods.name"
       >
-      </mt-field>
+        删除菜品
+      </mt-button>
 
-      <mt-field
-        label="菜品价格" 
-        placeholder="请输入菜品价格"
-        v-model="activeGoods.price"
-        type="number"
-      >
-      </mt-field>
-
-      <div @click="showCategoryPicker">
+      <div class="form">
         <mt-field
-          label="菜品分类" 
-          placeholder="请选择菜品分类"
-          v-model="activeGoods.category"
-          :readonly="true"
+          label="菜品名" 
+          placeholder="请输入菜品名"
+          v-model="activeGoods.name"
         >
         </mt-field>
+
+        <mt-field
+          label="菜品价格" 
+          placeholder="请输入菜品价格"
+          v-model="activeGoods.price"
+          type="number"
+        >
+        </mt-field>
+
+        <div @click="showCategoryPicker">
+          <mt-field
+            label="菜品分类" 
+            placeholder="请选择菜品分类"
+            v-model="activeGoods.category"
+            :readonly="true"
+          >
+          </mt-field>
+        </div>
+
+        <mt-field label="是否推荐" :readonly="true">
+          <mt-switch v-model="activeGoods.hotsale"></mt-switch>
+        </mt-field>
       </div>
-
-      <mt-field label="是否推荐" :readonly="true">
-        <mt-switch v-model="activeGoods.hotsale"></mt-switch>
-      </mt-field>
-
+      
       <mt-button 
         type="primary" 
-        style="width: 100%; margin-top: 1rem;"
+        style="width: 100%;"
         @click="submitEdit"
       >
-      确认更改
+        确认更改
       </mt-button>
 
     </div>
@@ -88,7 +99,7 @@
 <script>
 const localData = require('../../data/localData');
 import model from '../../components/base/BaseModal';
-import { Toast } from 'mint-ui';
+import { Toast, MessageBox } from 'mint-ui';
 
 export default {
   components: {
@@ -97,7 +108,7 @@ export default {
   data() {
     return {
       goods: [],
-      activeGoods: [],
+      activeGoods: {},
       showModel: false,
       categoryPickerVisible: false,
       categoryList: [],
@@ -125,6 +136,31 @@ export default {
     editGoods(goods) {
       this.activeGoods = goods;
       this.showEditor();
+      console.log(this.activeGoods);
+    },
+    delGoods() {
+      MessageBox.confirm(`确定删除${this.activeGoods.name}?`)
+        .then((action) => {
+          if (action === 'confirm') {
+            // 查询在数组goods中位置
+            let Index = this.goods.findIndex((item) => {
+              return item.name === this.activeGoods.name
+            });
+            // 删除
+            this.goods.splice(Index, 1);
+            // 更改本地储存
+            this.changeLocalStorage()
+            // toast已删除信息
+            let toastMessage = `${this.activeGoods.name} 已删除`
+            Toast(toastMessage);
+            // 关闭editor
+            this.closeEditor();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+      ;
     },
     submitEdit() {
       let Index = this.goods.findIndex((item) => {
@@ -166,7 +202,7 @@ export default {
     },
     closeEditor() {
       this.showModel = false;
-      this.activeGoods = [];
+      this.activeGoods = {};
     },
     showCategoryPicker() {
       this.categoryPickerVisible = !this.categoryPickerVisible;
@@ -217,8 +253,11 @@ export default {
   }
 
   .editor {
-    background: #fff;
     border-radius: 4px;
+
+    .form {
+      background: #fff;
+    }
   }
 
   .categoryPicker {
