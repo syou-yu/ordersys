@@ -36,7 +36,7 @@
         type="danger" 
         style="width: 100%;"
         @click="delGoods"
-        v-show="activeGoods.name"
+        v-show="JSON.stringify(activeGoods) !== '{}'"
       >
         删除菜品
       </mt-button>
@@ -136,7 +136,7 @@ export default {
     editGoods(goods) {
       this.activeGoods = goods;
       this.showEditor();
-      console.log(this.activeGoods);
+      // console.log(this.activeGoods);
     },
     delGoods() {
       MessageBox.confirm(`确定删除${this.activeGoods.name}?`)
