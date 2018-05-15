@@ -127,7 +127,8 @@ export default {
     let category  = this.goods.map((item) => {
       return item.category
     });
-    let categoryPickerValues = Array.from(new Set(category))
+    // let categoryPickerValues = Array.from(new Set(category));
+    let categoryPickerValues = ['凉粉系列', '雪山系列', '糕点系列'];
     this.categoryList = [{
       flex: 1,
       values: categoryPickerValues,
