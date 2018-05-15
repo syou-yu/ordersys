@@ -2,7 +2,7 @@
 <div class="container">
   <div class="header">
     <h1>菜品管理</h1>
-    <mt-button @click="showEditor">添加菜品</mt-button>
+    <mt-button @click="addGoods">添加菜品</mt-button>
   </div>
 
   <div class="goodsList">
@@ -36,7 +36,7 @@
         type="danger" 
         style="width: 100%;"
         @click="delGoods"
-        v-show="JSON.stringify(activeGoods) !== '{}'"
+        v-show="showDelBtn"
       >
         删除菜品
       </mt-button>
@@ -110,6 +110,7 @@ export default {
       goods: [],
       activeGoods: {},
       showModel: false,
+      showDelBtn: false,
       categoryPickerVisible: false,
       categoryList: [],
     }
@@ -135,8 +136,12 @@ export default {
   methods: {
     editGoods(goods) {
       this.activeGoods = goods;
+      this.showDelBtn = true;
       this.showEditor();
-      // console.log(this.activeGoods);
+    },
+    addGoods() {
+      this.showEditor();
+      this.showDelBtn = false;
     },
     delGoods() {
       MessageBox.confirm(`确定删除${this.activeGoods.name}?`)
@@ -181,13 +186,13 @@ export default {
           category,
           hotsale
         };
-        console.log(newGoods);
+        // console.log(newGoods);
         this.goods.push(newGoods);
 
         // 修改本地储存
         localStorage.setItem('goodsList', JSON.stringify(this.goods));
 
-        console.log(JSON.parse(localStorage.getItem('goodsList')));
+        // console.log(JSON.parse(localStorage.getItem('goodsList')));
         // 提示
         let toastMessage = `${this.activeGoods.name} 添加成功`
         Toast(toastMessage);
